@@ -19,6 +19,7 @@ class ColumnSettings
     const SETTING_COLLATION = 'collation';
     const SETTING_VALUES = 'values';
     const SETTING_COMMENT = 'comment';
+    const SETTING_UNIQUE = 'unique';
 
     private $allowedSettingsValues = [
         self::SETTING_NULL => ['is_bool'],
@@ -33,6 +34,7 @@ class ColumnSettings
         self::SETTING_COLLATION => ['is_null', 'is_string'],
         self::SETTING_VALUES => ['is_null', 'is_array'],
         self::SETTING_COMMENT => ['is_null', 'is_string'],
+        self::SETTING_UNIQUE => ['is_bool'],
     ];
 
     private $settings = [];
@@ -113,6 +115,11 @@ class ColumnSettings
     public function getComment(): ?string
     {
         return isset($this->settings[self::SETTING_COMMENT]) ? $this->settings[self::SETTING_COMMENT] : null;
+    }
+
+    public function isUnique(): ?bool
+    {
+        return isset($this->settings[self::SETTING_UNIQUE]) ? $this->settings[self::SETTING_UNIQUE] : null;
     }
 
     private function checkSettings(array $settings)

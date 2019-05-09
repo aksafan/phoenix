@@ -67,8 +67,8 @@ class PgsqlQueryBuilder extends CommonQueryBuilder implements QueryBuilderInterf
         if (!empty($enumSetColumns)) {
             foreach ($enumSetColumns as $column) {
                 $queries[] = 'CREATE TYPE ' . $this->escapeString($table->getName() . '__' . $column->getName()) . ' AS ENUM (' . implode(',', array_map(function ($value) {
-                    return "'$value'";
-                }, $column->getSettings()->getValues())) . ');';
+                        return "'$value'";
+                    }, $column->getSettings()->getValues())) . ');';
             }
         }
 
@@ -177,6 +177,7 @@ class PgsqlQueryBuilder extends CommonQueryBuilder implements QueryBuilderInterf
         } elseif ($column->getSettings()->allowNull() && $column->getSettings()->getDefault() === null) {
             $col .= ' DEFAULT NULL';
         }
+        $col .= $column->getSettings()->isUnique() ? ' UNIQUE' : '';
         $col .= $column->getSettings()->allowNull() ? '' : ' NOT NULL';
         return $col;
     }
